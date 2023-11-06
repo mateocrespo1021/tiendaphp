@@ -1,0 +1,8 @@
+import "./menu.js"
+import "./swiper.js"
+import "./validaciones.js"
+import "./tags.js"
+import "./carrito.js"
+import "./mostrar-carrito.js"
+import "./funciones.js"
+import "./paypal.js"

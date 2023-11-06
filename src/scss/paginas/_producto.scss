@@ -1,0 +1,26 @@
+@use "base/mixins" as m;
+@use "base/variables" as v;
+
+.producto{
+    @include m.contenedor;
+    text-align: center;
+    padding: 4rem 0;
+
+   p{
+    font-size: 2rem;
+    font-weight: bold;
+   }
+
+    &__contenido{
+        display:flex;
+        flex-direction: column;
+        gap: 2rem;
+        @include m.tablet{
+            flex-direction: row;
+        }
+    }
+
+    &__info{
+        flex-basis: 90%;
+    }
+}

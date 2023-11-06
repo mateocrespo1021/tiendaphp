@@ -1,0 +1,12 @@
+@use "base/mixins" as m;
+
+.productos{
+  @include m.contenedor;
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 4rem;
+  padding: 4rem 0;
+  @include m.tablet{
+    grid-template-columns: repeat(3,1fr);
+  }
+}

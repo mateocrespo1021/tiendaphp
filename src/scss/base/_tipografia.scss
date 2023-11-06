@@ -1,0 +1,65 @@
+@use 'variables' as v;
+@use 'mixins' as m;
+
+h1, h2, h3 {
+    @include m.headings;
+}
+
+h1 {
+    font-size: 4rem;
+}
+h2 {
+    font-size: 3.6rem;
+}
+h3 {
+    font-size: 3rem;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-lineas{
+    border-bottom: 1px solid #ccc;
+    border-top: 1px solid #ccc;
+    padding: 2rem;
+    font-size: 2rem;
+    text-align: center;
+
+    @include m.tablet{
+       border: none;
+       position: relative;
+       padding: 0;
+       &::after{
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 30%;
+        height: .2rem;
+        background-color: #ccc;
+
+       }
+
+       &::before{
+        content: "";
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        width: 30%;
+        height: .2rem;
+        background-color: #ccc;
+
+       }
+    }
+}
+
+
+//Se aplica los estilos si finalizan en ....
+[class$="__heading"]{
+    @include m.nombre-pagina;
+}
+[class$="__descripcion"]{
+    @include m.descripcion-pagina;
+}
+
