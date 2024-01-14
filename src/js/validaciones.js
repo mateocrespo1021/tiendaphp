@@ -3,11 +3,15 @@ import Swal from 'sweetalert2'
 (function (window, document) {
     document.addEventListener("DOMContentLoaded", () => {
         const btnProductos = document.querySelector("#btn-productos")
-        const btnCategoria = document.querySelector("#eliminar-categoria")
+        const btnCategoria = document.querySelectorAll(".eliminar-categoria")
 
         if (btnCategoria) {
-            btnCategoria.addEventListener("click", mostrarAlerta)
+            btnCategoria.forEach((btn)=>{
+                btn.addEventListener("click", mostrarAlerta)
+            })
+           
         }
+
         function mostrarAlerta(e) {
             e.preventDefault()
             Swal.fire({

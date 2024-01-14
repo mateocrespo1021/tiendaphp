@@ -4,6 +4,19 @@
         <div class="swiper">
             <!-- Additional required wrapper -->
             <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <picture>
+                        <source srcset="<?php echo $_ENV["HOST"] . "/img/productos/" . $producto->portada; ?>.webp"
+                            type="image/webp">
+
+                        <source srcset="<?php echo $_ENV["HOST"] . "/img/productos/" . $producto->portada; ?>.png"
+                            type="image/png">
+
+                        <img class="producto__imagen" loading="lazy" decoding="async"
+                            src="<?php echo $_ENV["HOST"] . "/img/productos/" . $producto->portada; ?>.png"
+                            alt="imagen portada actual">
+                    </picture>
+                </div>
                 <?php foreach ($imagenes as $imagen):
                     ; ?>
                     <!-- Slides -->
@@ -35,10 +48,10 @@
 
         <div class="producto__info">
             <div>
-                <p>
+                <p class="producto__nombre">
                     <?php echo $producto->nombre; ?>
                 </p>
-                <p>
+                <p class="producto__precio">
                     <?php echo $producto->precio . " $"; ?>
                 </p>
                 <p>
@@ -51,19 +64,22 @@
                         <label class="formulario__label" for="talla">Talla</label>
                         <select class="formulario__input" name="talla" id="talla">
                             <option value="">-- Seleccione --</option>
-                            <?php foreach($tallas as $talla):; ?>
-                              <option value="<?php echo $talla; ?>"><?php echo $talla; ?></option>
+                            <?php foreach ($tallas as $talla):
+                                ; ?>
+                                <option value="<?php echo $talla->nombre; ?>">
+                                    <?php echo $talla->nombre; ?>
+                                </option>
                             <?php endforeach; ?>
                         </select>
                     </div>
                     <div class="formulario__campo">
-                    <label class="formulario__label" for="cantidad">Cantidad</label>
-                    <input class="formulario__input" type="number" id="cantidad" placeholder="Ej. 1,2">
+                        <label class="formulario__label" for="cantidad">Cantidad</label>
+                        <input min="1" class="formulario__input" type="number" id="cantidad" placeholder="Ej. 1,2">
                     </div>
                 </fieldset>
-                <button id="btn-carrito" class="formulario__submit formulario__submit--agregar">Agregar al Carrito</button>
+                <button id="btn-carrito" class="formulario__submit formulario__submit--agregar">Agregar al
+                    Carrito</button>
             </form>
         </div>
     </div>
-
 </div>

@@ -15,6 +15,7 @@
        width: 100%;
        max-height: 20rem;
        margin-bottom: 2rem;
+       font-size: 1.8rem;
     }
 
     &__general{
@@ -24,8 +25,31 @@
         font-weight: bold;
         img{
             object-fit: cover;
-            width: 20rem;
-            height: 20rem;
+            width: 15rem;
+            height: 15rem;
+        }
+    }
+
+    &__vacio{
+        text-align: center;
+        font-size: 2.5rem;
+        padding: 2rem 0;
+        font-weight: bold;
+    }
+
+    &__botones{
+        display: flex;
+        align-items: center;
+        font-size: 2.5rem;
+        gap: 1rem;
+
+        .btns-editar{
+            color: v.$azul;
+        }
+
+        .btns-eliminar{
+            color: v.$naranja;
+            cursor: pointer;
         }
     }
 
@@ -43,8 +67,27 @@
     flex-direction: column;
     gap: 2rem;
 
+    @include m.tablet{
+        flex-direction: row;
+    }
+
     .ocultar{
         display: none;
+    }
+
+    &__paypal{
+        flex-basis: 50%;
+    }
+
+    &__wasap{
+        margin-bottom: 1rem;
+        a{
+            @include m.boton(#228B22, v.$negro);
+            border-radius: 1rem;
+
+        }
+      
+        flex-basis: 50%;
     }
    
 }

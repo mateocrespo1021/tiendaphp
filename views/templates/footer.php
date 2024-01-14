@@ -1,3 +1,5 @@
+<a class="icono-whats" href="https://wa.me/593983513154" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+
 <footer class="footer">
     <div class="footer__contenedor">
         <div class="footer__titulo">

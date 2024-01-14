@@ -1,0 +1,22 @@
+@use "base/mixins" as m;
+@use "base/variables" as v;
+
+
+.blog{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    @include m.contenedor;
+   
+    &__h1{
+        text-align: center;
+    }
+
+    &__img{
+        img{
+            height: 70rem;
+            object-fit: cover;
+        }
+
+    }
+}

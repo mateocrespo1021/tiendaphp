@@ -9,7 +9,8 @@
 
 <div class="dashboard__formulario">
 
-    <?php require_once __DIR__ . "./../../templates/alertas.php"; ?>
+  
+<?php require_once(__DIR__ . '/../../templates/alertas.php'); ?>
 
     <form enctype="multipart/form-data" method="post" class="formulario">
          <?php include_once __DIR__ . "/formulario.php"; ?>

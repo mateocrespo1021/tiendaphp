@@ -12,9 +12,9 @@ class CategoriasController
     public static function index(Router $router)
     {
 
-        // if(!is_admin()){
-        //     header("Location: /login");
-        //  }
+        if(!is_admin()){
+            header("Location: /login");
+         }
 
          $pagina_actual=$_GET["page"];
          $pagina_actual=filter_var($pagina_actual,FILTER_VALIDATE_INT);
@@ -41,9 +41,9 @@ class CategoriasController
     public static function crear(Router $router)
     {
 
-        // if(!is_admin()){
-        //     header("Location: /login");
-        //  }
+        if(!is_admin()){
+            header("Location: /login");
+         }
 
         $alertas = [];
         $categoria = new Categoria();
@@ -51,11 +51,13 @@ class CategoriasController
 
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // if(!is_admin()){
-            //     header("Location: /login");
-            //  } 
+           
+            if(!is_admin()){
+                header("Location: /login");
+             } 
 
             $categoria->sincronizar($_POST);
+
             $alertas = $categoria->validar();
             if (empty($alertas)) {
 
@@ -77,9 +79,9 @@ class CategoriasController
     public static function editar(Router $router)
     {
 
-        // if(!is_admin()){
-        //     header("Location: /login");
-        //  }
+        if(!is_admin()){
+            header("Location: /login");
+         }
 
         $alertas = [];
 
@@ -99,9 +101,10 @@ class CategoriasController
         }
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // if(!is_admin()){
-            //     header("Location: /login");
-            //  } 
+            
+            if(!is_admin()){
+                header("Location: /login");
+             } 
 
             $categoria->sincronizar($_POST);
             $alertas = $categoria->validar();
@@ -126,9 +129,9 @@ class CategoriasController
     {
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-            // if(!is_admin()){
-            //     header("Location: /login");
-            //  }
+            if(!is_admin()){
+                header("Location: /login");
+             }
           
             $id = $_POST["id"];
             $categoria = Categoria::find($id);

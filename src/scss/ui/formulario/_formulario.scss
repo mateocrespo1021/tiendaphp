@@ -16,6 +16,16 @@
         margin-bottom: 2rem;
     }
 
+    &__campos{
+        display: flex;
+        gap: 1rem;
+        justify-content: space-between;
+
+        & > div{
+            flex-basis: 50%;
+        }
+    }
+
 
 
     &__campo{

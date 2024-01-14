@@ -13,7 +13,10 @@ class ImagenesController
 
     public static function index(Router $router)
     {
-
+      
+        if(!is_admin()){
+            header("Location: /login");
+         }
 
 
         //Validar el id
@@ -50,9 +53,9 @@ class ImagenesController
     public static function crear(Router $router)
     {
 
-        // if(!is_admin()){
-        //     header("Location: /login");
-        //  }
+        if(!is_admin()){
+            header("Location: /login");
+         }
 
         $alertas = [];
 
@@ -77,9 +80,10 @@ class ImagenesController
       
 
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
-            // if(!is_admin()){
-            //     header("Location: /login");
-            //  } 
+            
+            if(!is_admin()){
+                header("Location: /login");
+             } 
 
             if (!empty($_FILES["imagen"]["tmp_name"])) {
                 $carpeta_imagenes = "../public/img/productos";
@@ -128,9 +132,9 @@ class ImagenesController
     public static function editar(Router $router)
     {
 
-        // if(!is_admin()){
-        //     header("Location: /login");
-        //  }
+        if(!is_admin()){
+            header("Location: /login");
+         }
 
         $alertas = [];
 
@@ -154,13 +158,14 @@ class ImagenesController
 
 
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
-            // if(!is_admin()){
-            //     header("Location: /login");
-            //  } 
+           
+            if(!is_admin()){
+                header("Location: /login");
+             } 
 
             if (!empty($_FILES["imagen"]["tmp_name"])) {
                 $carpeta_imagenes = "../public/img/productos";
-                //Crear la carpeta si existe
+                //Crear la carpeta si no existe
                 if (!is_dir($carpeta_imagenes)) {
                     mkdir($carpeta_imagenes, 0755, true);
                 }
@@ -180,7 +185,10 @@ class ImagenesController
             //Validar
             $alertas = $imagen->validar();
 
+          //  debuguear($_POST);
+
             if (empty($alertas)) {
+
                 if (isset($nombre_imagen)) {
                     $imagen_png->save($carpeta_imagenes . "/" . $nombre_imagen . ".png");
                     $imagen_webp->save($carpeta_imagenes . "/" . $nombre_imagen . ".webp");
@@ -213,9 +221,9 @@ class ImagenesController
     {
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-            // if(!is_admin()){
-            //     header("Location: /login");
-            //  }
+            if(!is_admin()){
+                header("Location: /login");
+             }
           
             $id = $_POST["id"];
             $imagen = Imagen::find($id);

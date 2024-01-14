@@ -19,12 +19,6 @@
         </select>
     </div>
     <div class="formulario__campo">
-        <label for="tags_input" class="formulario__label">Tallas Disponibles (separadas por coma)</label>
-        <input type="text" class="formulario__input" id="tags_input" placeholder="Ej. S , M , L , XL , XXL " >
-    </div>
-    <div id="tags" class="formulario__listado"></div>
-    <input type="hidden" name="tags" value="<?php echo $producto->tags ?? ""; ?>">
-    <div class="formulario__campo">
         <label for="imagen" class="formulario__label">Imagen</label>
         <input type="file" class="formulario__input formulario__input--file" id="imagen" name="portada" placeholder="Imagen Producto" value="<?php echo $producto->portada ?? ""; ?>">
     </div>
@@ -49,9 +43,5 @@
     <div class="formulario__campo">
         <label for="descripcion" class="formulario__label">Descripción</label>
         <textarea class="formulario__input" id="descripcion" name="descripcion" placeholder="Descripción Producto" cols="30" rows="10"><?php echo $producto->descripcion ?? ""; ?></textarea>
-    </div>
-    <div class="formulario__campo">
-        <label for="stock" class="formulario__label">Stock</label>
-        <input type="number" min="1" class="formulario__input" id="stock" name="stock" placeholder="Ej.20" value="<?php echo $producto->stock; ?>">
     </div>
 </fieldset>

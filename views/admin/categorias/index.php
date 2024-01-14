@@ -31,7 +31,7 @@
 
         <form action="/admin/categorias/eliminar" method="post" class="table__formulario">
            <input type="hidden" name="id" id="id-categoria" value="<?php echo $categoria->id; ?>" >
-            <button id="eliminar-categoria" class="table__accion table__accion--eliminar" type="submit">
+            <button class="table__accion table__accion--eliminar eliminar-categoria" type="submit">
                 <i class="fa-solid fa-circle-xmark"></i>
                 Eliminar
             </button>

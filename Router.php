@@ -20,7 +20,9 @@ class Router
     public function comprobarRutas()
     {
 
-        $url_actual = $_SERVER['PATH_INFO'] ?? '/';
+        // $_SERVER['PATH_INFO'] ?? '/';
+
+        $url_actual = strtok($_SERVER['REQUEST_URI'], '?') ?? '/';
         $method = $_SERVER['REQUEST_METHOD'];
 
         if ($method === 'GET') {
@@ -29,7 +31,7 @@ class Router
             $fn = $this->postRoutes[$url_actual] ?? null;
         }
 
-        if ( $fn ) {
+        if ($fn) {
             call_user_func($fn, $this);
         } else {
             header("Location: /404");
@@ -39,24 +41,24 @@ class Router
     public function render($view, $datos = [])
     {
         foreach ($datos as $key => $value) {
-            $$key = $value; 
+            $$key = $value;
         }
 
-        ob_start(); 
+        ob_start();
 
         include_once __DIR__ . "/views/$view.php";
 
         $contenido = ob_get_clean(); // Limpia el Buffer
 
         //Utilizar el layout deacuerdo a la url
-        $urlActual=$_SERVER["PATH_INFO"]??"/";
+        $urlActual = $_SERVER["PATH_INFO"] ?? "/";
 
-        if (str_contains($urlActual,"/admin")) {
+        if (str_contains($urlActual, "/admin")) {
             include_once __DIR__ . '/views/admin-layout.php';
-        }else{
+        } else {
             include_once __DIR__ . '/views/layout.php';
         }
 
-        
+
     }
 }

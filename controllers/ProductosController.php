@@ -6,6 +6,7 @@ use Classes\Paginacion;
 use Model\Categoria;
 use Model\Producto;
 use MVC\Router;
+use Model\Imagen;
 use Intervention\Image\ImageManagerStatic as Image;
 
 class ProductosController
@@ -13,6 +14,10 @@ class ProductosController
 
     public static function index(Router $router)
     {
+
+        if (!is_admin()) {
+            header("Location: /login");
+        }
 
 
         $pagina_actual = $_GET["page"];
@@ -26,8 +31,8 @@ class ProductosController
         $total = Producto::total();
         $paginacion = new Paginacion($pagina_actual, $por_pagina, $total);
         $productos = Producto::paginar($por_pagina, $paginacion->offset());
-        
-        
+
+
 
         foreach ($productos as $producto) {
             $producto->categoria = Categoria::find($producto->categoria_id);
@@ -45,11 +50,11 @@ class ProductosController
     public static function crear(Router $router)
     {
 
- 
 
-        // if(!is_admin()){
-        //     header("Location: /login");
-        //  }
+
+        if (!is_admin()) {
+            header("Location: /login");
+        }
 
         $alertas = [];
 
@@ -58,9 +63,9 @@ class ProductosController
 
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-            // if(!is_admin()){
-            //     header("Location: /login");
-            //  }
+            if (!is_admin()) {
+                header("Location: /login");
+            }
             //Leer imagen
             if (!empty($_FILES["portada"]["tmp_name"])) {
                 $carpeta_imagenes = "../public/img/productos";
@@ -84,6 +89,7 @@ class ProductosController
             $alertas = $producto->validar();
 
             if (empty($alertas)) {
+                
                 $imagen_png->save($carpeta_imagenes . "/" . $nombre_imagen . ".png");
                 $imagen_webp->save($carpeta_imagenes . "/" . $nombre_imagen . ".webp");
 
@@ -109,9 +115,9 @@ class ProductosController
     public static function editar(Router $router)
     {
 
-        // if(!is_admin()){
-        //     header("Location: /login");
-        //  }
+        if (!is_admin()) {
+            header("Location: /login");
+        }
 
         $alertas = [];
         //Validar el id
@@ -134,9 +140,10 @@ class ProductosController
 
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-            // if(!is_admin()){
-            //     header("Location: /login");
-            //  }
+            if (!is_admin()) {
+                header("Location: /login");
+            }
+
             //Leer imagen
 
             if (!empty($_FILES["portada"]["tmp_name"])) {
@@ -199,9 +206,9 @@ class ProductosController
     {
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-            // if(!is_admin()){
-            //     header("Location: /login");
-            //  }
+            if (!is_admin()) {
+                header("Location: /login");
+            }
 
             $id = $_POST["id"];
             $producto = Producto::find($id);
@@ -214,7 +221,20 @@ class ProductosController
             unlink($rutaImgPng);
             $rutaImgWebp = $carpeta_imagenes . "/" . $producto->portada . ".webp";
             unlink($rutaImgWebp);
+
+            //Eliminamos todas las imagenes del producto
+            $imagenes = Imagen::whereArray(["producto_id" => $id]);
+
+            foreach ($imagenes as $imagen) {
+                $rutaImgPng = $carpeta_imagenes . "/" . $imagen->imagen . ".png";
+                unlink($rutaImgPng);
+                $rutaImgWebp = $carpeta_imagenes . "/" . $imagen->imagen . ".webp";
+                unlink($rutaImgWebp);
+            }
+
             $resultado = $producto->eliminar();
+
+
             if ($resultado) {
                 header("Location: /admin/productos");
             }

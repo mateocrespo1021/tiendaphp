@@ -1,12 +1,47 @@
 @use "base/mixins" as m;
+@use "base/variables" as v;
 
-.productos{
+.filtros {
+  @include m.contenedor-sm;
+
+  &__contenido {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    @include m.tablet {
+      flex-direction: row;
+    }
+  }
+
+
+  &__submit{
+    @include m.boton(v.$negro,v.$blanco);
+    border-radius: 1rem;
+    margin: 0 auto;
+    @include m.tablet{
+      width: 40%;
+    }
+
+  }
+}
+
+.productos {
   @include m.contenedor;
   display: grid;
-  grid-template-columns: repeat(2,1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 4rem;
   padding: 4rem 0;
-  @include m.tablet{
-    grid-template-columns: repeat(3,1fr);
+
+  @include m.tablet {
+    grid-template-columns: repeat(3, 1fr);
   }
+}
+
+
+.productos-sin{
+  text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
+  
 }

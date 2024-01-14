@@ -1,0 +1,64 @@
+@use "base/mixins" as m;
+@use "base/variables" as v;
+
+.mensaje-vacio {
+  display: none;
+
+
+  &.mostrar {
+    display: block;
+    @include m.contenedor-md;
+    text-align: center;
+    font-weight: bold;
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  .mensaje-boton {
+    @include m.boton(v.$negro, v.$blanco);
+    display: inline-block;
+  }
+}
+
+.pagar {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  &.ocultar {
+    display: none;
+  }
+
+  @include m.tablet {
+    flex-direction: row;
+
+  }
+
+  & div {
+    flex-basis: 50%;
+  }
+
+  h3 {
+    text-align: center;
+  }
+
+  .resumen {
+
+    overflow-x: scroll;
+
+    @include m.tablet {
+      overflow-y: scroll;
+      overflow-x: hidden;
+      max-height: 90rem;
+    }
+  }
+
+}
+
+
+.step {
+  span {
+    font-size: 2rem;
+  }
+
+}

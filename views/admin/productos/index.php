@@ -18,10 +18,8 @@
                     <th scope="col" class="table__th">Nombre</th>
                     <th scope="col" class="table__th">Precio</th>
                     <th scope="col" class="table__th">Categoria</th>
-                    <th scope="col" class="table__th">Tallas</th>
                     <th scope="col" class="table__th">Portada</th>
                     <th scope="col" class="table__th">Descripcion</th>
-                    <th scope="col" class="table__th">Stock</th>
                     <th scope="col" class="table__th"></th>
                 </tr>
             </thead>
@@ -38,9 +36,6 @@
                             <?php echo $producto->categoria->nombre; ?>
                         </td>
                         <td class="table__td">
-                            <?php echo $producto->tags; ?>
-                        </td>
-                        <td class="table__td">
                             <picture>
                                 <source srcset="<?php echo $_ENV["HOST"] . "/img/productos/" . $producto->portada; ?>.webp"
                                     type="image/webp">
@@ -54,17 +49,20 @@
                             </picture>
                         </td>
                         <td class="table__td">
-                          <p class="table__parrafo"><?php echo $producto->descripcion; ?></p>
-                            
-                        </td>
-                        <td class="table__td">
-                            <?php echo $producto->stock; ?>
+                            <p class="table__parrafo">
+                                <?php echo $producto->descripcion; ?>
+                            </p>
+
                         </td>
                         <td class="table__td--acciones">
                             <a class="table__accion table__accion--editar"
                                 href="/admin/imagenes?id=<?php echo $producto->id; ?>">
                                 <i class="fa-solid fa-user-pen"></i>
                                 Imagenes
+                            </a>
+                            <a class="table__accion table__accion--editar" href="/admin/tallas?id=<?php echo $producto->id; ?>">
+                                <i class="fa-solid fa-user-pen"></i>
+                                Tallas Y Stock
                             </a>
                             <a class="table__accion table__accion--editar"
                                 href="/admin/productos/editar?id=<?php echo $producto->id; ?>">

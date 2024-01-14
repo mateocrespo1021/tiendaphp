@@ -1,5 +1,6 @@
 <?php
 namespace Model;
+
 class ActiveRecord
 {
 
@@ -81,16 +82,21 @@ class ActiveRecord
         return $atributos;
     }
 
-    // Sanitizar los datos antes de guardarlos en la BD
+ //   Sanitizar los datos antes de guardarlos en la BD
     public function sanitizarAtributos()
     {
         $atributos = $this->atributos();
         $sanitizado = [];
         foreach ($atributos as $key => $value) {
+           
             $sanitizado[$key] = self::$db->escape_string($value);
         }
         return $sanitizado;
     }
+
+
+
+
 
     // Sincroniza BD con Objetos en memoria
     public function sincronizar($args = [])
@@ -109,8 +115,7 @@ class ActiveRecord
         if (!is_null($this->id)) {
             // actualizar
             $resultado = $this->actualizar();
-        }
-        else {
+        } else {
             // Creando un nuevo registro
             $resultado = $this->crear();
         }
@@ -129,7 +134,7 @@ class ActiveRecord
     public static function find($id)
     {
         $query = "SELECT * FROM " . static::$tabla . " WHERE id = $id";
-       // debuguear($query);
+        // debuguear($query);
         $resultado = self::consultarSQL($query);
         return array_shift($resultado);
     }
@@ -137,7 +142,16 @@ class ActiveRecord
     public static function findProducts($id)
     {
         $query = "SELECT * FROM " . static::$tabla . " WHERE producto_id = $id";
-       // debuguear($query);
+        // debuguear($query);
+        $resultado = self::consultarSQL($query);
+        return $resultado;
+    }
+
+
+    public static function findCompras($id)
+    {
+        $query = "SELECT * FROM " . static::$tabla . " WHERE id_compra = $id";
+        // debuguear($query);
         $resultado = self::consultarSQL($query);
         return $resultado;
     }
@@ -158,12 +172,35 @@ class ActiveRecord
         return $resultado;
     }
 
+    public static function paginarWhere($por_pagina, $offset, $array = [])
+    {
+        $query = "SELECT * FROM " . static::$tabla . " WHERE ";
+        foreach ($array as $key => $value) {
+            if ($key == array_key_last($array)) {
+                $query .= " $key = '$value'";
+            } else {
+                $query .= " $key = '$value' AND ";
+            }
+
+        }
+        $query .= " ORDER BY id DESC LIMIT $por_pagina OFFSET $offset";
+        $resultado = self::consultarSQL($query);
+        return $resultado;
+    }
+
     // Busqueda Where con Columna 
     public static function where($columna, $valor)
     {
         $query = "SELECT * FROM " . static::$tabla . " WHERE $columna = '$valor'";
         $resultado = self::consultarSQL($query);
         return array_shift($resultado);
+    }
+
+    public static function wherePrecio($columna, $valor)
+    {
+        $query = "SELECT * FROM " . static::$tabla . " WHERE $columna <= '$valor'";
+        $resultado = self::consultarSQL($query);
+        return $resultado;
     }
 
     //Retornar los registros por un orden
@@ -189,15 +226,17 @@ class ActiveRecord
         foreach ($array as $key => $value) {
             if ($key == array_key_last($array)) {
                 $query .= " $key = '$value'";
-            }
-            else {
+            } else {
                 $query .= " $key = '$value' AND ";
             }
 
         }
+
         $resultado = self::consultarSQL($query);
         return $resultado;
     }
+
+
 
     //Traer un total de registros
 
@@ -225,8 +264,7 @@ class ActiveRecord
         foreach ($array as $key => $value) {
             if ($key == array_key_last($array)) {
                 $query .= " $key = '$value'";
-            }
-            else {
+            } else {
                 $query .= " $key = '$value' AND ";
             }
 
@@ -243,14 +281,15 @@ class ActiveRecord
         // Sanitizar los datos
         $atributos = $this->sanitizarAtributos();
 
+        
         // Insertar en la base de datos
         $query = " INSERT INTO " . static::$tabla . " ( ";
         $query .= join(', ', array_keys($atributos));
-        $query .= " ) VALUES (' ";
+        $query .= " ) VALUES ('";
         $query .= join("', '", array_values($atributos));
-        $query .= " ') ";
+        $query .= "') ";
 
-       // debuguear($query); // Descomentar si no te funciona algo
+       //debuguear($query); // Descomentar si no te funciona algo
 
         // Resultado de la consulta
         $resultado = self::$db->query($query);
@@ -259,6 +298,11 @@ class ActiveRecord
             'id' => self::$db->insert_id
         ];
     }
+
+
+
+
+ 
 
     // Actualizar el registro
     public function actualizar()

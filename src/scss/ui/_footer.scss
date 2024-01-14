@@ -1,6 +1,17 @@
 @use "base/mixins" as m;
 @use "base/variables" as v;
 
+.icono-whats{
+    font-size: 7rem;
+    color: v.$verde;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    padding: 2rem;
+    z-index: 1111111111;
+  }
+
+
 .footer{
     background-color: rgb(31 44 39);
     &__contenedor{

@@ -1,29 +1,40 @@
-import { addCookie, getCookie, mostrarTotal } from "./funciones.js";
+import { addCookie, getCookie, mostrarTotal, recargarPagar } from "./funciones.js";
 (function (window, document) {
   document.addEventListener("DOMContentLoaded", () => {
     let pedidos = JSON.parse(getCookie("pedidos")) || [];
     const divCarrito = document.querySelector("#productos-carrito");
-    const paypal = document.querySelector("#paypal-button-container");
+    const contentPagar = document.querySelector("#contenedor-pagar");
+    const divVacio = document.querySelector("#div-vacio");
     if (divCarrito) {
-      mostrarTotal()
-      if (!pedidos.length > 0) {
-        paypal.classList.add("ocultar");
-        return;
-      }
-
-      paypal.classList.remove("ocultar")
+      verificarVacio();
       mostrarHTML();
-
+      mostrarTotal("det_subtotal_checkout");
+      mostrarTotal("det_total_checkout");
     }
 
-    const btnsEliminar = document.querySelectorAll(".btns-eliminar");
-    btnsEliminar.forEach((btns) => {
-      btns.addEventListener("click", eliminarProducto);
-    });
+    function agregarEliminar() {
+      const btnsEliminar = document.querySelectorAll(".btns-eliminar");
+      btnsEliminar.forEach((btns) => {
+        btns.addEventListener("click", eliminarProducto);
+      });
+    }
+
+    function verificarVacio() {
+      if (!pedidos.length > 0) {
+        contentPagar.classList.add("ocultar");
+        divVacio.classList.add("mostrar");
+        return;
+      } else {
+        if (contentPagar.classList.contains("ocultar")) {
+          contentPagar.classList.remove("ocultar");
+        }
+      }
+    }
 
     function eliminarProducto(e) {
+      pedidos = JSON.parse(getCookie("pedidos")) || [];
       let id;
-      let talla
+      let talla;
       if (e.target.classList.contains("fa-circle-xmark")) {
         id = e.target.parentElement.getAttribute("data-id");
         talla = e.target.parentElement.getAttribute("data-talla");
@@ -31,20 +42,20 @@ import { addCookie, getCookie, mostrarTotal } from "./funciones.js";
         id = e.target.getAttribute("data-id");
         talla = e.target.getAttribute("data-talla");
       }
-
-
-
-      pedidos = pedidos.filter((pedido) => !(pedido.id === id && pedido.talla === talla));
+      pedidos = pedidos.filter(
+        (pedido) => !(pedido.id === id && pedido.talla === talla)
+      );
 
       addCookie("pedidos", JSON.stringify(pedidos), 1);
+      verificarVacio();
       mostrarHTML();
-      mostrarTotal()
-      if (!pedidos.length > 0) {
-        paypal.classList.add("ocultar");
-      }
+      mostrarTotal("det_subtotal_checkout");
+      mostrarTotal("det_total_checkout");
+      recargarPagar();
     }
 
     function mostrarHTML() {
+      pedidos = JSON.parse(getCookie("pedidos")) || [];
       limpiarCarrito();
       pedidos.forEach((pedido) => {
         const { id, talla, cantidad, nombre, portada, precio } = pedido;
@@ -52,7 +63,7 @@ import { addCookie, getCookie, mostrarTotal } from "./funciones.js";
         div.classList.add("carrito__pedido");
         div.innerHTML = `
                  <div class="carrito__general">
-                 <img src="../../img/productos/${portada}.webp">
+                 <img src="${portada}">
                  <p>Nombre: ${nombre}</p>
                  <p>Precio: ${precio}</p>
                  </div>
@@ -65,8 +76,10 @@ import { addCookie, getCookie, mostrarTotal } from "./funciones.js";
                  <a class="btns-eliminar" data-id="${id}" data-talla="${talla}"><i class="fa-solid fa-circle-xmark"></i></a>
                  </div>
                 `;
+
         divCarrito.append(div);
       });
+      agregarEliminar();
     }
 
     function limpiarCarrito() {

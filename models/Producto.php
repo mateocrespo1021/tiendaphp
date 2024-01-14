@@ -4,19 +4,15 @@ namespace Model;
 
 class Producto extends ActiveRecord{
     protected static $tabla = 'productos';
-    protected static $columnasDB = ['id', 'nombre', 'descripcion', 'precio', 'tags','portada', 'stock', 'categoria_id'];
+    protected static $columnasDB = ['id', 'nombre', 'descripcion', 'precio', 'portada', 'categoria_id'];
 
     public $id;
     public $nombre;
     public $descripcion;
     public $precio;
 
-    public $tags;
     public $portada;
-    public $stock;
     public $categoria_id;
-
-
 
     public function __construct($args = [])
     {
@@ -24,9 +20,8 @@ class Producto extends ActiveRecord{
         $this->nombre = $args['nombre'] ?? '';
         $this->descripcion = $args['descripcion'] ?? '';
         $this->precio = $args['precio'] ?? '';
-        $this->tags = $args['tags'] ?? '';
         $this->portada = $args['portada'] ?? '';
-        $this->stock = $args['stock'] ?? '';
+        $this->categoria_id = $args['catogoria_id'] ?? null;
     }
 
     public function validar() {
@@ -42,12 +37,8 @@ class Producto extends ActiveRecord{
         if(!$this->portada) {
             self::$alertas['error'][] = 'La portada es Obligatorio';
         }
-        if(!$this->stock) {
-            self::$alertas['error'][] = 'El stock es obligatoria';
-        }
-
-        if(!$this->tags) {
-            self::$alertas['error'][] = 'Las tallas son obligatorias';
+        if(!$this->categoria_id) {
+            self::$alertas['error'][] = 'La categoria es obligatoria';
         }
     
         return self::$alertas;

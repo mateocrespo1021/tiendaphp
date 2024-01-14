@@ -2,7 +2,6 @@
 
 namespace Controllers;
 
-
 use Model\Producto;
 
 class APIProductos
