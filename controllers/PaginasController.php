@@ -18,8 +18,8 @@ class PaginasController
 
     public static function index(Router $router)
     {
-
-        $router->render("paginas/index", ["titulo" => "Inicio", "subtitulo" => "MARCA DE ROPA DE MUJER"]);
+        $productos = Producto::getRecentRecords();
+        $router->render("paginas/index", ["titulo" => "Inicio", "subtitulo" => "MARCA DE ROPA DE MUJER" , "productos"=>$productos]);
     }
 
     public static function productos(Router $router)

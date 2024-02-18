@@ -82,13 +82,13 @@ class ActiveRecord
         return $atributos;
     }
 
- //   Sanitizar los datos antes de guardarlos en la BD
+    //   Sanitizar los datos antes de guardarlos en la BD
     public function sanitizarAtributos()
     {
         $atributos = $this->atributos();
         $sanitizado = [];
         foreach ($atributos as $key => $value) {
-           
+
             $sanitizado[$key] = self::$db->escape_string($value);
         }
         return $sanitizado;
@@ -129,6 +129,15 @@ class ActiveRecord
         $resultado = self::consultarSQL($query);
         return $resultado;
     }
+
+    // Obtener los registros más recientes
+    public static function getRecentRecords($limit = 6)
+    {
+        $query = "SELECT * FROM " . static::$tabla . " ORDER BY id DESC LIMIT $limit";
+        $resultado = self::consultarSQL($query);
+        return $resultado;
+    }
+
 
     // Busca un registro por su id
     public static function find($id)
@@ -281,7 +290,7 @@ class ActiveRecord
         // Sanitizar los datos
         $atributos = $this->sanitizarAtributos();
 
-        
+
         // Insertar en la base de datos
         $query = " INSERT INTO " . static::$tabla . " ( ";
         $query .= join(', ', array_keys($atributos));
@@ -289,7 +298,7 @@ class ActiveRecord
         $query .= join("', '", array_values($atributos));
         $query .= "') ";
 
-       //debuguear($query); // Descomentar si no te funciona algo
+        //debuguear($query); // Descomentar si no te funciona algo
 
         // Resultado de la consulta
         $resultado = self::$db->query($query);
@@ -302,7 +311,7 @@ class ActiveRecord
 
 
 
- 
+
 
     // Actualizar el registro
     public function actualizar()

@@ -9,7 +9,7 @@
     </div>
     <div class="entradas">
         <?php foreach ($blogs as $blog) { ?>
-            <article class="entrada">
+            <article class="entrada" <?php aos_animacion(); ?>>
                 <div class="entrada__img">
                     <picture>
                         <source srcset="<?php echo $_ENV["HOST"] . "/img/blog/" . $blog->imagen; ?>.webp" type="image/webp">

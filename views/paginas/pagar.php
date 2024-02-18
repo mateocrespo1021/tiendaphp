@@ -107,7 +107,7 @@
         </div>
     </div>
 
-    <div class="resumen">
+    <div class="resumen-pago">
         <h4 class="resumen__titulo">Productos Agregados</h4>
         <div class="carrito" id="productos-carrito">
             <h2 class="carrito__titulo">Agregados</h2>

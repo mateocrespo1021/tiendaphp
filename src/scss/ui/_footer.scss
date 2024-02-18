@@ -13,16 +13,18 @@
 
 
 .footer{
-    background-color: rgb(31 44 39);
+    background-color:#0a2102;
+    margin-top: 2rem;
     &__contenedor{
         @include m.contenedor;
-        padding: 2rem;
+        padding: 3rem;
     }
 
     &__titulo{
         h2{
             font-size: 2rem;
             position: relative;
+            color: v.$blanco;
             @include m.tablet{
                 font-size: 4rem;
             }
